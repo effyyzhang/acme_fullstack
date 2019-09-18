@@ -1,40 +1,45 @@
-import { DESTROY_USER, SET_USERS, SET_LOADING } from './constants';
-import axios from 'axios';
+import { DESTROY_USER, SET_USERS, SET_LOADING, UPDATE_USER } from "./constants";
+import axios from "axios";
 
-
-const setUsers = (users)=> {
+const setUsers = users => {
   return {
     users,
     type: SET_USERS
   };
 };
 
-const setLoading = (loading)=> {
+const setLoading = loading => {
   return {
     type: SET_LOADING,
     loading
   };
 };
 
-const _destroyUser = (user)=> {
+const _destroyUser = user => {
   return {
     type: DESTROY_USER,
     user
   };
 };
 
+const _updateUser = user => {
+  return {
+    type: UPDATE_USER,
+    user
+  };
+};
 
-const fetchUsers = ()=> {
-  return async(dispatch)=> {
+const fetchUsers = () => {
+  return async dispatch => {
     dispatch(setLoading(true));
-    const users = (await axios.get('/api/users')).data;
+    const users = (await axios.get("/api/users")).data;
     dispatch(setLoading(false));
     return dispatch(setUsers(users));
   };
 };
 
-const destroyUser = (user)=> {
-  return async(dispatch)=> {
+const destroyUser = user => {
+  return async dispatch => {
     dispatch(setLoading(true));
     await axios.delete(`/api/users/${user.id}`);
     dispatch(setLoading(false));
@@ -42,4 +47,13 @@ const destroyUser = (user)=> {
   };
 };
 
-export { fetchUsers, destroyUser };
+const updateUser = user => {
+  return async dispatch => {
+    dispatch(setLoading(true));
+    const response = (await axios.put(`/api/users/${user.id}`, user)).data;
+    dispatch(setLoading(false));
+    return dispatch(_updateUser(response));
+  };
+};
+
+export { fetchUsers, destroyUser, updateUser };

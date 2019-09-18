@@ -1,17 +1,26 @@
-import { DESTROY_USER, SET_USERS, SET_LOADING, UPDATE_USER } from "./constants";
+import { DESTROY_USER, SET_USERS, SET_LOADING, SET_ERROR, UPDATE_USER, CREATE_USER } from "./constants";
 import axios from "axios";
 
-const setUsers = users => {
-  return {
-    users,
-    type: SET_USERS
-  };
-};
 
 const setLoading = loading => {
   return {
     type: SET_LOADING,
     loading
+  };
+};
+
+
+const setError = error => {
+  return {
+    type: SET_ERROR,
+    error
+  };
+};
+
+const setUsers = users => {
+  return {
+    users,
+    type: SET_USERS
   };
 };
 
@@ -28,6 +37,27 @@ const _updateUser = user => {
     user
   };
 };
+
+const _createUser = user => {
+  return {
+    type: CREATE_USER,
+    user
+  }
+}
+
+const createUser = (user, history) => {
+  return async dispatch => {
+    dispatch(setLoading(true))
+    try {
+      const response = (await axios.post(`/api/users/`, user)).data;
+      dispatch(_createUser(response))
+      history.push('/users')
+    } catch (e) {
+      dispatch(setError(e));
+    }
+    dispatch(setLoading(false));
+  }
+}
 
 const fetchUsers = () => {
   return async dispatch => {
@@ -56,4 +86,4 @@ const updateUser = user => {
   };
 };
 
-export { fetchUsers, destroyUser, updateUser };
+export { fetchUsers, destroyUser, updateUser, createUser, setError };

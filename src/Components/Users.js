@@ -9,7 +9,7 @@ const Users = ({ users, destroyUser, updateUser })=> {
         users.map( user => <li key={ user.id }>
           { user.name }
           <button onClick={()=> destroyUser(user)}>x</button>
-          <button onClick={()=> updateUser(user)}>Make {(user.active)? 'Inactive': 'Active'}</button>
+          <button onClick={()=> updateUser({...user, active: !user.active})}>Make {(user.active)? 'Inactive': 'Active'}</button>
         </li>)
       }
     </ul>

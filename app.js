@@ -7,6 +7,7 @@ module.exports = app;
 
 app.use("/build", express.static(path.join(__dirname, "dist")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
+app.use(express.json())
 
 app.get("/", (req, res, next) =>
   res.sendFile(path.join(__dirname, "index.html"))
@@ -27,7 +28,7 @@ app.delete("/api/users/:id", (req, res, next) => {
 
 app.put("/api/users/:id", (req, res, next) => {
   User.findByPk(req.params.id)
-    .then(user => user.update())
+    .then(user => user.update(req.body))
     .then(user => res.send(user))
     .catch(next);
 });

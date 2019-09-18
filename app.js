@@ -32,3 +32,9 @@ app.put("/api/users/:id", (req, res, next) => {
     .then(user => res.send(user))
     .catch(next);
 });
+
+app.post("/api/users", (req, res, next) => {
+  User.create(req.body)
+    .then(user => res.send(user))
+    .catch(next);
+});

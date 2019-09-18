@@ -1,7 +1,7 @@
 const app = require('./app');
 const db = require('./db');
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 db.syncAndSeed()
-  .then(()=> app.listen(port, ()=> console.log(`listening on port ${port}`)));
+  .then(() => app.listen(port, () => console.log(`listening on port ${port}`)));

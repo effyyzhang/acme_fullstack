@@ -18,9 +18,12 @@ class App extends Component {
         {
           loading && <div>...loading</div>
         }
-        <Route path='/filter/active' exact component={Users} />
-        <Route path='/users/create' exact component={Create} />
+
+
+
         <Route path='/users' exact component={Users} />
+        <Route path='/users/create' exact component={Create} />
+        <Route path='/users/active' component={Users} />
       </HashRouter>
     );
   }

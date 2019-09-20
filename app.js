@@ -38,3 +38,7 @@ app.post("/api/users", (req, res, next) => {
     .then(user => res.send(user))
     .catch(next);
 });
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500).send({message: error.message})
+})

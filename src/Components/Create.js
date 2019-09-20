@@ -7,18 +7,23 @@ class Create extends Component {
         super()
         this.state = {
             text: '',
-            active: true
+            active: true,
+            error: ''
         }
         this.create = this.create.bind(this);
     }
     create() {
         const { text, active } = this.state
-        const { createUser } = this.props
-        createUser({ name: text, active })
+        this.props.createUser({text, active})
+        .then(() => this.props.history('/users'))
+        .catch(ex => {
+            console.log(ex)
+            this.setState({error: ex.response.data.message})
+        } )
     }
     render() {
-        const { text, active } = this.state
-        const { error } = this.props
+        const { text, active, error } = this.state
+        console.log(error)
         return (
             <div>
                 { error && <h6 className='error'>{error}</h6> }

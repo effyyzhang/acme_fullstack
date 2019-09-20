@@ -11,6 +11,7 @@ const User = conn.define('user', {
   name: {
     type: STRING,
     allowNull: false,
+    unique: true,
     validate: {
       notEmpty: true
     }

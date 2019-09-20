@@ -47,15 +47,11 @@ const _createUser = user => {
 
 const createUser = (user, history) => {
   return async dispatch => {
-    dispatch(setLoading(true))
-    try {
-      const response = (await axios.post(`/api/users/`, user)).data;
-      dispatch(_createUser(response))
-      history.push('/users')
-    } catch (e) {
-      dispatch(setError(e));
-    }
-    dispatch(setLoading(false));
+  dispatch(setLoading(true))
+  const response = (await axios.post(`/api/users/`, user)).data;
+  dispatch(setLoading(false))
+  return dispatch(_createUser(response))
+
   }
 }
 
@@ -79,10 +75,11 @@ const destroyUser = user => {
 
 const updateUser = user => {
   return async dispatch => {
+    console.log(user)
     dispatch(setLoading(true));
-    const response = (await axios.put(`/api/users/${user.id}`, user)).data;
+    await axios.put(`/api/users/${user.id}`, user);
     dispatch(setLoading(false));
-    return dispatch(_updateUser(response));
+    return dispatch(_updateUser(user));
   };
 };
 

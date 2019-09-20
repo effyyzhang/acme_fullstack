@@ -9,17 +9,18 @@ const Nav = ({ count, activeCount, location: { pathname } }) => {
       <nav>
         <Link to='/' className={pathname === '/' ? 'active' : ''}>Home</Link>
         <Link to='/users' className={pathname === '/users' ? 'active' : ''}>Users({count})</Link>
-        <Link to='/filter/active' className={pathname === '/filter/active' ? 'active' : ''}>Active Users({activeCount})</Link>
+        <Link to='/users/active' className={pathname === '/users/active' ? 'active' : ''}>Active Users({activeCount})</Link>
         <Link to='/users/create' className={pathname === '/users/create' ? 'active' : ''}>Create A User</Link>
       </nav>
     </div>
   );
 };
 
-const mapStateToProps = ({ users }, otherProps) => {
+const mapStateToProps = ({ users }) => {
+  const activeCount = users.filter(_user => _user.active).length;
   return {
     count: users.length,
-    activeCount: users.filter(_user => _user.active).length
+    activeCount
   };
 };
 

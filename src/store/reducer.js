@@ -22,7 +22,7 @@ const usersReducer = (state = [], action) => {
     case DESTROY_USER:
       return state.filter(user => user.id !== action.user.id);
     case UPDATE_USER:
-      return state.map(user => (user.id === action.user.id) ? action.user : user);
+      return state.map(user => (user.id === action.user.id)? action.user : user);
     case CREATE_USER:
       return [...state, action.user]
     default:
